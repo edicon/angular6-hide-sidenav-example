@@ -1,26 +1,30 @@
+// For SSR
 import { NgtUniversalModule } from '@ng-toolkit/universal';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomMaterialModule } from './core/material.module';
+
 import { NavigationComponent } from './navigation/navigation.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { HomeLayoutComponent } from './home-layout/home-layout.component';
+
+import { LoginLayoutComponent } from './login-layout/login-layout.component';
+import { LoginComponent } from './login/login.component';
+
 import { SecondComponent } from './second/second.component';
 import { FirstComponent } from './first/first.component';
-import {RouterModule, Routes} from "@angular/router";
-import {CustomMaterialModule} from "./core/material.module";
-import { LoginLayoutComponent } from './login-layout/login-layout.component';
-import { HomeLayoutComponent } from './home-layout/home-layout.component';
-import { LoginComponent } from './login/login.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', data: { title: 'First Component' }, pathMatch: 'full' },
   {
     path: 'login', component: LoginLayoutComponent, data: {title: 'First Component'},
     children: [
-      {path: '', component: LoginComponent}
+      { path: '', component: LoginComponent}
     ]
   },
   { path: 'main', component: HomeLayoutComponent,
@@ -34,18 +38,18 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     NavigationComponent,
+    ToolbarComponent,
+    HomeLayoutComponent,
     SecondComponent,
     FirstComponent,
     LoginLayoutComponent,
-    HomeLayoutComponent,
     LoginComponent,
-    ToolbarComponent,
   ],
-  imports:[
- CommonModule,
-NgtUniversalModule,
-
-
+  imports: [
+    // For SSR
+    // CommonModule,
+    // NgtUniversalModule,
+    BrowserModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(
       appRoutes,
@@ -54,5 +58,6 @@ NgtUniversalModule,
     CustomMaterialModule
   ],
   providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
